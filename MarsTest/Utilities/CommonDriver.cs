@@ -6,20 +6,19 @@ namespace MarsTest.Utilities
 {
     public class CommonDriver
     {
-        public IWebDriver driver;
+        public static IWebDriver driver;
+        
+        //public void Open()
+        //{
+        //    driver = new ChromeDriver();
+        //    driver.Manage().Window.Maximize();
+        //    driver.Url = "http://localhost:5000/Home";
+        //}
 
-        [SetUp]
-        public void Open()
-        {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Url = "http://localhost:5000/Home";
-        }
-
-        [TearDown]
-        public void Close()
-        {
-            driver.Quit();
-        }
+        
+        //public void Close()
+        //{
+        //    driver.Quit();
+        //}
     }
 }

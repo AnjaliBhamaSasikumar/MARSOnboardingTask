@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace MarsTest.Utilities
 {
-    public class WaitHelpers
+    public class WaitHelpers 
     {
         public static void WaitToBeClickable(IWebDriver driver, int seconds, string locator, string locatorValue)
         {
@@ -44,6 +44,28 @@ namespace MarsTest.Utilities
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.CssSelector(locatorValue)));
             }
+        }
+        public static void WaitToBeVisible(IWebDriver driver, int seconds, string locator, string locatorValue)
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, seconds));
+
+            if (locator == "XPath")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath(locatorValue)));
+            }
+            if (locator == "Name")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Name(locatorValue)));
+            }
+            if (locator == "CssSelector")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(locatorValue)));
+            }
+            if (locator == "LinkText")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.LinkText(locatorValue)));
+            }
+
         }
 
 

@@ -8,23 +8,36 @@ using System.Threading.Tasks;
 
 namespace MarsTest.Pages
 {
-    public class SkillPage
+    public class SkillPage : CommonDriver
     {
-        public void CreateSkills(IWebDriver driver, string Skill, string Level)
+        IWebElement Skills => driver.FindElement(By.XPath("//a[contains(text(),'Skills')]"));
+        IWebElement AddNewSki => driver.FindElement(By.XPath("//thead/tr[1]/th[3]/div[1]"));
+        IWebElement TextSkill => driver.FindElement(By.Name("name"));
+        SelectElement ChooseLevelSki => new SelectElement(driver.FindElement(By.Name("level")));
+        IWebElement AddSkill => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/div[1]/span[1]/input[1]"));
+        IWebElement skilledit => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[1]"));
+        IWebElement updatebutton => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/span[1]/input[1]"));
+        IWebElement deletelastrow => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[4]/tr[1]/td[3]/span[2]/i[1]"));
+        IWebElement deletethirdrow => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[3]/tr[1]/td[3]/span[2]/i[1]"));
+        IWebElement deletesecondrow => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/span[2]/i[1]"));
+        IWebElement deletefirstrow => driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[2]/i[1]"));
+
+
+        public void CreateSkills(string Skill, string Level)
         {
-            //Add Skills
-            IWebElement Skills = driver.FindElement(By.XPath("//a[contains(text(),'Skills')]"));
+            //Identify and click Skills tab
             Skills.Click();
-            IWebElement AddNewSki = driver.FindElement(By.XPath("//thead/tr[1]/th[3]/div[1]"));
+            //Identify and click new skills add button
             AddNewSki.Click();
-            IWebElement TextSkill = driver.FindElement(By.Name("name"));
+            //Identify and click skill textbox
             TextSkill.SendKeys(Skill);
-            SelectElement ChooseLevelSki = new SelectElement(driver.FindElement(By.Name("level")));
+            //Identify and choose skill level
             ChooseLevelSki.SelectByValue(Level);
-            IWebElement AddSkill = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/div[1]/span[1]/input[1]"));
+            //Identify and click add skill button
             AddSkill.Click();
         }
-        public string createskills(IWebDriver driver)
+
+        public string createskills()
         {
             Thread.Sleep(3000);
             //WaitHelpers.WaitToExist(driver, 3, "XPath", "//body/div[@id='account-profile-section']/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]");
@@ -32,28 +45,27 @@ namespace MarsTest.Pages
             return newskill.GetAttribute("outerText").ToString();
 
         }
-        public void Editskill(IWebDriver driver, string Skill, string Level)
+        public void Editskill(string Skill, string Level)
         {
-            IWebElement LanguageTab = driver.FindElement(By.XPath("//a[contains(text(),'Skills')]"));
-            LanguageTab.Click();
-            //Click Edit language button
-            Thread.Sleep(3000);
-            IWebElement Languageedit = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[1]"));
-            Languageedit.Click();
+            Skills.Click();
+
+            //Click Edit Skill button
+            //Thread.Sleep(3000);
+            skilledit.Click();
+
             //Edit Language textbox
-            IWebElement Langugetextbox = driver.FindElement(By.Name("name"));
-            Langugetextbox.Clear();
-            Langugetextbox.SendKeys(Skill);
+            TextSkill.Clear();
+            TextSkill.SendKeys(Skill);
+
             //Edit Language Level
-            SelectElement Languageleveledit = new SelectElement(driver.FindElement(By.Name("level")));
-            Languageleveledit.SelectByValue(Level);
+            ChooseLevelSki.SelectByValue(Level);
+
             //Click Update button
-            Thread.Sleep(3000);
-            IWebElement updatebutton = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/span[1]/input[1]"));
+            //Thread.Sleep(3000);
             updatebutton.Click();
 
         }
-        public string Getskill(IWebDriver driver)
+        public string Getskill()
         {
             Thread.Sleep(3000);
             //WaitHelpers.WaitToExist(driver, 5, "XPath", "//body/div[@id='account-profile-section']/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[2]/div[1]/div[2]/div[1]");
@@ -61,24 +73,19 @@ namespace MarsTest.Pages
             return firstskill.GetAttribute("outerText").ToString();
         }
 
-        public void DeleteSkill(IWebDriver driver)
+        public void DeleteSkill()
         {
-            IWebElement LanguageTab = driver.FindElement(By.XPath("//a[contains(text(),'Skills')]"));
-            LanguageTab.Click();
-            IWebElement deletelastrow = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[4]/tr[1]/td[3]/span[2]/i[1]"));
+            Skills.Click();
             deletelastrow.Click();
-            IWebElement deletethirdrow = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[3]/tr[1]/td[3]/span[2]/i[1]"));
             deletethirdrow.Click();
             //driver.Navigate().Refresh();
             WaitHelpers.WaitToBeClickable(driver, 10, "XPath", "//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/span[2]/i[1]");
-            IWebElement deletesecondrow = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/span[2]/i[1]"));
             deletesecondrow.Click();
-            IWebElement deletefirstrow = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[3]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[2]/i[1]"));
             deletefirstrow.Click();
 
         }
 
-        public string deleteskills(IWebDriver driver)
+        public string deleteskills()
         {
             Thread.Sleep(3000);
             //WaitHelpers.WaitToExist(driver, 5, "XPath", "//body/div[@id='account-profile-section']/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[2]/div[1]/div[2]/div[1]");
