@@ -38,9 +38,7 @@ Scenario Outline: Testcase_3 Edit language details
   Examples: 
   | Language     | Level            |
   | Urdu         | Fluent           |
-  #| Spanish      | Native/Bilingual |
-  #| Kannada      | Basic            |
-  #| Hindi        | Conversational   |
+  
 
   @DeleteLanguages
 Scenario: Testcase_4 Delete existing languages
@@ -64,10 +62,8 @@ Scenario Outline: Testcase_6 Edit skill details
   Then I am ble to see edited skill details including '<skill>' and '<level>'
 Examples: 
     | skill                | level            |
-	#| Selenium             | Intermediate     |
 	| Simulink             | Intermediate     |
-	#| Microsoft word       | Expert           |
-	#| Verilog              | Beginner         |
+	
 
 @DeleteSkills
 Scenario: Testcase_7 Delete existing skills

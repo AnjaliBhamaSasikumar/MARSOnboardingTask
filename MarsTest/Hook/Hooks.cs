@@ -6,7 +6,7 @@ namespace MarsTest.Hook
     [Binding]
     public sealed class Hooks : CommonDriver 
     {
-        //IWebDriver driver = new ChromeDriver();
+       
         public Hooks()
         {
             driver = new ChromeDriver();

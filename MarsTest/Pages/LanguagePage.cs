@@ -46,17 +46,15 @@ namespace MarsTest.Pages
         
         public string createlanguages()
         {
-            //Thread.Sleep(3000);
             WaitHelpers.WaitToBeVisible(driver, 20, "CssSelector", "div.ui:nth-child(1) div.ui.fluid.container div.ui.grid div.row div.eight.wide.column form.ui.form:nth-child(2) div.ui.bottom.attached.tab.segment.active.tooltip-target:nth-child(2) div.row div.twelve.wide.column.scrollTable div.form-wrapper > table.ui.fixed.table");
             IWebElement newlanguage = driver.FindElement(By.XPath("//body/div[@id='account-profile-section']/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[2]/div[1]/div[2]/div[1]"));
             return newlanguage.GetAttribute("outerText").ToString();
-
             
         }
 
         public void EditLanguage(string Language, string Level)
         {
-            //IWebElement LanguageTab = driver.FindElement(By.LinkText("Languages"));
+            
             LanguageTab.Click();
 
             //Click Edit language button
@@ -85,7 +83,7 @@ namespace MarsTest.Pages
 
         public void DeleteLanguage()
         {
-            //IWebElement LanguageTab = driver.FindElement(By.LinkText("Languages"));
+            
             LanguageTab.Click();
             //Delete last row
             deletelastrow.Click();
