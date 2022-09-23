@@ -24,8 +24,7 @@ namespace MarsTest.Pages
 
             try
             {
-                //Identify SignIn button and open
-                
+                //Identify SignIn button and open                
                 SignInButton.Click();
 
                 //Identify username text box
