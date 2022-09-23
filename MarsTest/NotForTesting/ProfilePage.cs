@@ -1,35 +1,36 @@
 ﻿using MarsTest.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using NUnit.Framework;
 
-namespace MarsTest.Pages
+namespace MarsTest.NotForTesting
 {
     public class ProfilePage
     {
 
-        public void Description(IWebDriver driver)
-        {
-            //Click Description Text
-            IWebElement EditDescription = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/div/div/div/h3/span/i"));
-            EditDescription.Click();
-            //Enter Description details
-            IWebElement EnterText = driver.FindElement(By.Name("value"));
-            EnterText.Click();
-            EnterText.Clear();
-            EnterText.SendKeys("I am looking for a Test Analyst Job");
-            //Save Description button
-            IWebElement SaveDescription = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/div/div/form/div/div/div[2]/button"));
-            SaveDescription.Click();
-            Thread.Sleep(3000);
-            WaitHelpers.WaitToExist(driver, 5, "XPath", "//span[contains(text(),'I am looking for a Test Analyst Job')]");
-        }
-        public string GetDescription(IWebDriver driver)
-        {
-            IWebElement newText = driver.FindElement(By.XPath("//span[contains(text(),'I am looking for a Test Analyst Job')]"));
-            return newText.Text;
-        }
+        //public void Description(IWebDriver driver)
+        //{
+        //    //Click Description Text
+        //    IWebElement EditDescription = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/div/div/div/h3/span/i"));
+        //    EditDescription.Click();
+        //    //Enter Description details
+        //    IWebElement EnterText = driver.FindElement(By.Name("value"));
+        //    EnterText.Click();
+        //    EnterText.Clear();
+        //    EnterText.SendKeys("I am looking for a Test Analyst Job");
+        //    //Save Description button
+        //    IWebElement SaveDescription = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/div/div/form/div/div/div[2]/button"));
+        //    SaveDescription.Click();
+        //    Thread.Sleep(3000);
+        //    WaitHelpers.WaitToExist(driver, 5, "XPath", "//span[contains(text(),'I am looking for a Test Analyst Job')]");
+        //}
+        //public string GetDescription(IWebDriver driver)
+        //{
+        //    IWebElement newText = driver.FindElement(By.XPath("//span[contains(text(),'I am looking for a Test Analyst Job')]"));
+        //    return newText.Text;
+        //}
 
-  
+
         public void Education(IWebDriver driver)
         {
             IWebElement Education = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/form/div[1]/a[3]"));
@@ -75,7 +76,7 @@ namespace MarsTest.Pages
         public void Profile(IWebDriver driver)
         {
             IWebElement ViewProfile = driver.FindElement(By.XPath("//div/section[1]/div/a[2]"));
-            ViewProfile.Click();    
+            ViewProfile.Click();
         }
     }
 }
