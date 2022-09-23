@@ -1,8 +1,8 @@
+using MarsTest.Hook;
 using MarsTest.Pages;
 using MarsTest.Utilities;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace MarsTest.StepDefinition
@@ -10,146 +10,152 @@ namespace MarsTest.StepDefinition
     [Binding]
     public class ProjectStepDefinitions : CommonDriver
     {
-        SignIn SignInObj = new SignIn();
-        HomePage HomePageObj = new HomePage();
-        ProfilePage ProfilePageObj = new ProfilePage();
-        LanguageTab LanguageTabObj = new LanguageTab();
-        SkillPage SkillPageObj = new SkillPage();
+        SignIn SignInObj;
+        HomePage HomePageObj;
+        DescriptionPage DescriptionPageObj;
+        LanguagePage LanguagePageObj;
+        SkillPage SkillPageObj;
+        private readonly Hooks _Hooks;
+
+        public ProjectStepDefinitions(Hooks Hooks)
+        {
+            this._Hooks = Hooks;
+            SignInObj = new SignIn();
+            HomePageObj = new HomePage();
+            DescriptionPageObj = new DescriptionPage();
+            LanguagePageObj = new LanguagePage();
+            SkillPageObj = new SkillPage();
+            //driver = new ChromeDriver();
+        }
 
         [Given(@"I successfully SignIn to the Website")]
         public void GivenISuccessfullySignInToTheWebsite()
         {
-            driver = new ChromeDriver();
-            SignInObj.SignInActions(driver);
+            
+            SignInObj.SignInActions();
         }
-
-        [When(@"I navigate to Profile page")]
-        public void WhenINavigateToProfilePage()
+        
+        [Given(@"I navigate to Profile page")]
+        public void GivenINavigateToProfilePage()
         {
-            HomePageObj.GoToProfile(driver);
+            HomePageObj.GoToProfilePage();
         }
 
-        [When(@"I create Description details to the profile")]
+        [When(@"I create description details to the profile")]
         public void WhenICreateDescriptionDetailsToTheProfile()
         {
-            ProfilePageObj.Description(driver);
+            DescriptionPageObj.AddDescription();
         }
 
-        [Then(@"The record should added Description details to the profile page")]
-        public void ThenTheRecordShouldAddedDescriptionDetailsToTheProfilePage()
+        [Then(@"I am able to see my Description details in the profile page")]
+        public void ThenIAmAbleToSeeMyDescriptionDetailsInTheProfilePage()
         {
-            string newDescription = ProfilePageObj.GetDescription(driver);
-            Assert.That(newDescription == "I am looking for a Test Analyst Job", "Description do not created successfully");
-            driver.Quit();
-
+            string newDescription = DescriptionPageObj.GetDescription();
+            Assert.That(newDescription == "I am a Test Analyst", "Actual description and expected decription do not match");
         }
 
-
-        [When(@"I enter '([^']*)' and '([^']*)'")]
-        public void WhenIEnterAnd(string p0, string p1)
+        [When(@"I add Language including '([^']*)' and '([^']*)'")]
+        public void WhenIAddLanguageIncludingAnd(string p0, string p1)
         {
-            LanguageTabObj.CreateLanguage(driver, p0, p1);
+            LanguagePageObj.CreateLanguage(p0, p1);
         }
 
-        [Then(@"'([^']*)' and '([^']*)' should be created")]
-        public void ThenAndShouldBeCreated(string p0, string p1)
+        [Then(@"I am able to see Language details including '([^']*)' and '([^']*)'")]
+        public void ThenIAmAbleToSeeLanguageDetailsIncludingAnd(string p0, string p1)
         {
-            string newlanguage = LanguageTabObj.createlanguages(driver);
-            string newlanguagelevel = LanguageTabObj.createlanguages(driver);
+            string newlanguage = LanguagePageObj.createlanguages();
+            string newlanguagelevel = LanguagePageObj.createlanguages();
 
-            Assert.That(newlanguage.Contains(p0), "Language not created successfully");
-            Assert.That(newlanguagelevel.Contains(p1), "Languagelevel not created successfully");
-
-            driver.Close();
-        }
-        [When(@"I edit '([^']*)' and '([^']*)'")]
-        public void WhenIEditAnd(string p0, string p1)
-        {
-            LanguageTabObj.EditLanguage(driver, p0, p1);
+            Assert.That(newlanguage.Contains(p0), "Actual language and expected language do not match");
+            Assert.That(newlanguagelevel.Contains(p1), "Actual languagelevel and expected language level do not match");
+            
         }
 
-
-        [Then(@"The record should update '([^']*)' and '([^']*)'")]
-        public void ThenTheRecordShouldUpdateAnd(string p0, string p1)
+        [When(@"I edit language including'([^']*)' and '([^']*)'")]
+        public void WhenIEditLanguageIncludingAnd(string p0, string p1)
         {
-            string firstlanguage = LanguageTabObj.GetLanguage(driver);
-            string firstlanguagelevel = LanguageTabObj.GetLanguage(driver);
+            LanguagePageObj.EditLanguage(p0, p1);
+        }
 
-            Assert.That(firstlanguage.Contains(p0), "Language not edited successfully");
-            Assert.That(firstlanguagelevel.Contains(p1), "Languagelevel not edited successfully");
-            driver.Quit();
+        [Then(@"I am able to see edited language details including '([^']*)' and '([^']*)'")]
+        public void ThenIAmAbleToSeeEditedLanguageDetailsIncludingAnd(string p0, string p1)
+        {
+            string firstlanguage = LanguagePageObj.GetLanguage();
+            string firstlanguagelevel = LanguagePageObj.GetLanguage();
 
+            Assert.That(firstlanguage.Contains(p0), "Actual language and expected language do not match");
+            Assert.That(firstlanguagelevel.Contains(p1), "Actual languagelevel and expected language level do not match");
+            
         }
 
         [When(@"I navigate to Language tab and delete language")]
         public void WhenINavigateToLanguageTabAndDeleteLanguage()
         {
-            LanguageTabObj.DeleteLanguage(driver);
+            LanguagePageObj.DeleteLanguage();
         }
 
-        [Then(@"Language details should be deleted")]
-        public void ThenLanguageDetailsShouldBeDeleted()
+        [Then(@"I am able to delete languages details from the profile page")]
+        public void ThenIAmAbleToDeleteLanguagesDetailsFromTheProfilePage()
         {
-
-            string lastlanguage = LanguageTabObj.deletelanguages(driver);
-            string lastlanguagelevel = LanguageTabObj.deletelanguages(driver);
-            Assert.That(lastlanguage != "p0", "Language do not deleted successfully");
-            Assert.That(lastlanguagelevel != "p1", "Languagelevel do not deleted successfully");
-            driver.Quit();
-        }
-        [When(@"I create skill details '([^']*)' and '([^']*)' to the profile")]
-        public void WhenICreateSkillDetailsAndToTheProfile(string p0, string p1)
-        {
-            SkillPageObj.CreateSkills(driver, p0, p1);
+           string lastlanguage = LanguagePageObj.deletelanguages();
+           string lastlanguagelevel = LanguagePageObj.deletelanguages();
+           Assert.That(lastlanguage != "p0", "Language do not deleted successfully");
+           Assert.That(lastlanguagelevel != "p1", "Language do not deleted successfully");
+           
         }
 
-        [Then(@"The record '([^']*)' and '([^']*)' should add to the profile page")]
-        public void ThenTheRecordAndShouldAddToTheProfilePage(string p0, string p1)
+        [When(@"I add skill details including '([^']*)' and '([^']*)' to the profile")]
+        public void WhenIAddSkillDetailsIncludingAndToTheProfile(string p0, string p1)
         {
-
-            string newskill = SkillPageObj.createskills(driver);
-            string newskilllevel = SkillPageObj.createskills(driver);
-
-            Assert.That(newskill.Contains(p0), "Skills not created successfully");
-            Assert.That(newskilllevel.Contains(p1), "Skilllevel not created successfully");
-
-            driver.Close();
-        }
-        [When(@"I edit '([^']*)' and '([^']*)' to the profile")]
-        public void WhenIEditAndToTheProfile(string p0, string p1)
-        {
-            SkillPageObj.Editskill(driver, p0, p1);
+            SkillPageObj.CreateSkills(p0, p1);
         }
 
-        [Then(@"'([^']*)' and '([^']*)' should be updated")]
-        public void ThenAndShouldBeUpdated(string p0, string p1)
+        [Then(@"I am able to see skill details including '([^']*)' and '([^']*)'")]
+        public void ThenIAmAbleToSeeSkillDetailsIncludingAnd(string p0, string p1)
         {
-            string firstskill = SkillPageObj.Getskill(driver);
-            string firstskilllevel = SkillPageObj.Getskill(driver);
+            string newskill = SkillPageObj.createskills();
+            string newskilllevel = SkillPageObj.createskills();
 
-            Assert.That(firstskill.Contains(p0), "Skills not created successfully");
-            Assert.That(firstskilllevel.Contains(p1), "Skilllevel not created successfully");
+            Assert.That(newskill.Contains(p0), "Actual skills and expected skills do not match");
+            Assert.That(newskilllevel.Contains(p1), "Actual skilllevel and expected skill level do not match");
 
             driver.Close();
         }
 
-        [When(@"I navigate to skill tab and delete skill")]
-        public void WhenINavigateToSkillTabAndDeleteSkill()
+        [When(@"I edit skill details including '([^']*)' and '([^']*)' to the profile")]
+        public void WhenIEditSkillDetailsIncludingAndToTheProfile(string p0, string p1)
         {
-            SkillPageObj.DeleteSkill(driver);
+            SkillPageObj.Editskill(p0, p1);
         }
 
-        [Then(@"skill details should be deleted")]
-        public void ThenSkillDetailsShouldBeDeleted()
+        [Then(@"I am ble to see edited skill details including '([^']*)' and '([^']*)'")]
+        public void ThenIAmBleToSeeEditedSkillDetailsIncludingAnd(string p0, string p1)
         {
-            string lastskill = SkillPageObj.deleteskills(driver);
-            string lastskilllevel = SkillPageObj.deleteskills(driver);
-            Assert.That(lastskill != "p0", "Language do not deleted successfully");
-            Assert.That(lastskilllevel != "p1", "Languagelevel do not deleted successfully");
+            string firstskill = SkillPageObj.Getskill();
+            string firstskilllevel = SkillPageObj.Getskill();
+
+            Assert.That(firstskill.Contains(p0), "Actaul skills and expected skills do not match");
+            Assert.That(firstskilllevel.Contains(p1), "Actual skilllevel and expected skill level do not match");
+
+            driver.Close();
+        }
+
+        [When(@"I navigate to skill tab and delete skill details")]
+        public void WhenINavigateToSkillTabAndDeleteSkillDetails()
+        {
+            SkillPageObj.DeleteSkill();
+        }
+
+        [Then(@"I am able to delete skill details from the profile page")]
+        public void ThenIAmAbleToDeleteSkillDetailsFromTheProfilePage()
+        {
+            string lastskill = SkillPageObj.deleteskills();
+            string lastskilllevel = SkillPageObj.deleteskills();
+            Assert.That(lastskill != "p0", "Skills do not deleted successfully");
+            Assert.That(lastskilllevel != "p1", "Skills do not deleted successfully");
             driver.Quit();
         }
+
 
     }
 }
-
-

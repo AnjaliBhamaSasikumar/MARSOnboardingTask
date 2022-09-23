@@ -15,7 +15,7 @@ namespace MarsTest.POM
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
-        }  
+        }
         [FindsBy(How = How.LinkText, Using = "Share Skill")]
         public IWebElement ShareSkillButton { get; set; }
 
@@ -37,6 +37,8 @@ namespace MarsTest.POM
         [FindsBy(How = How.XPath, Using = "//body/div[1]/div[1]/div[1]/div[2]/div[1]/form[1]/div[5]/div[2]/div[1]/div[1]/div[1]")]
         public IWebElement ServiceType { get; set; }
 
+        [FindsBy(How = How.XPath, Using = "//body[1]/div[1]/div[1]/div[1]/div[2]/div[1]/form[1]/div[6]/div[2]/div[1]/div[1]/div[1]/input[1]")]
+        public IWebElement LocationType { get; set; }
 
         public void NavigateToShareSkillPage()
         {
@@ -50,10 +52,11 @@ namespace MarsTest.POM
             TagsText.SendKeys(Keys.Enter);
             TagsText.SendKeys("#Automation");
             ServiceType.Click();
+            LocationType.Click();
 
 
-        
-        
+
+
         }
     }
 }

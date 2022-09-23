@@ -2,7 +2,7 @@
 
 namespace MarsTest.POM
 {
-    public class SignInPage 
+    public class SignInPage
     {
         IWebDriver driver;
 

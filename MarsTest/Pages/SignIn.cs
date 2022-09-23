@@ -10,32 +10,34 @@ using System.Threading.Tasks;
 
 namespace MarsTest.Pages
 {
-    public class SignIn
+    public class SignIn : CommonDriver
     {
-        public void SignInActions(IWebDriver driver)
-        {
-            // open chrome browser
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("http://localhost:5000/Home");
+       
+        IWebElement SignInButton => driver.FindElement(By.XPath("//*[@id='home']/div/div/div[1]/div/a"));
+        IWebElement UserNameTextBox => driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[1]/input"));
+        IWebElement LoginButton => driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
+        IWebElement PasswordTextBox => driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[2]/input"));
 
-            //Identify SignIn button and open
-            IWebElement SignInButton = driver.FindElement(By.XPath("//*[@id='home']/div/div/div[1]/div/a"));
-            SignInButton.Click();
+        public void SignInActions()
+        {
+            
+
             try
             {
+                //Identify SignIn button and open
+                
+                SignInButton.Click();
+
                 //Identify username text box
-                IWebElement UserNameTextBox = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[1]/input"));
                 UserNameTextBox.SendKeys("anjalibs@gmail.com");
 
-                // Identify password text box
-                IWebElement PasswordTextBox = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[2]/input"));
+                // Identify password text box 
                 PasswordTextBox.SendKeys("Intern2022");
 
                 //Identify login button and click on it
-                IWebElement LoginButton = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
                 LoginButton.Click();
                 WaitHelpers.WaitToBeClickable(driver, 5, "XPath", "//div/div[1]/div[2]/div/span");
-                //Thread.Sleep(3000);
+                
             }
 
             catch(Exception ex)
